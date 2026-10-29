@@ -39,7 +39,7 @@ Everything below is **planned**. It will be built step by step, starting with a 
 
 ## Documentation
 
-Design notes and diagrams live in [`docs/`](docs/). The diagrams in [`docs/diagramas/`](docs/diagramas/) are [Excalidraw](https://excalidraw.com) files: open them at excalidraw.com or with the Excalidraw extension for VS Code. The API contract will be added there soon.
+Design notes and diagrams live in [`docs/`](docs/). The diagrams in [`docs/diagramas/`](docs/diagramas/) are [Excalidraw](https://excalidraw.com) files: open them at excalidraw.com or with the Excalidraw extension for VS Code. The showcase API contract is in [`docs/api-contract.md`](docs/api-contract.md).
 
 ## Author
 

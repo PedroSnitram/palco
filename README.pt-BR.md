@@ -39,7 +39,7 @@ Tudo abaixo está **planejado**. A construção é feita passo a passo, começan
 
 ## Documentação
 
-As anotações de design e os diagramas ficam em [`docs/`](docs/). Os diagramas em [`docs/diagramas/`](docs/diagramas/) são arquivos do [Excalidraw](https://excalidraw.com): abra-os em excalidraw.com ou com a extensão do Excalidraw para o VS Code. O contrato da API será adicionado lá em breve.
+As anotações de design e os diagramas ficam em [`docs/`](docs/). Os diagramas em [`docs/diagramas/`](docs/diagramas/) são arquivos do [Excalidraw](https://excalidraw.com): abra-os em excalidraw.com ou com a extensão do Excalidraw para o VS Code. O contrato da API da vitrine está em [`docs/api-contract.md`](docs/api-contract.md) (em inglês).
 
 ## Autor
 
