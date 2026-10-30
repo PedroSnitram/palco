@@ -14,7 +14,7 @@ O projeto gira em torno de um desafio central: **abrir as vendas de um show para
 
 **Em desenvolvimento. Ainda sem código da aplicação.**
 
-O projeto está na primeira fase: fundamentos de rede e HTTP, e definição do contrato da API antes de escrever qualquer código. O desenvolvimento do primeiro app (`palco-site`) começa na próxima etapa.
+A primeira fase, fundamentos de rede e HTTP e o contrato da API, está concluída. O desenvolvimento do primeiro app (`palco-site`) começa na próxima etapa.
 
 ## Arquitetura planejada
 
@@ -39,7 +39,17 @@ Tudo abaixo está **planejado**. A construção é feita passo a passo, começan
 
 ## Documentação
 
-As anotações de design e os diagramas ficam em [`docs/`](docs/). Os diagramas em [`docs/diagramas/`](docs/diagramas/) são arquivos do [Excalidraw](https://excalidraw.com): abra-os em excalidraw.com ou com a extensão do Excalidraw para o VS Code. O contrato da API da vitrine está em [`docs/api-contract.md`](docs/api-contract.md) (em inglês).
+As anotações de design e os diagramas ficam em [`docs/`](docs/). Os diagramas em [`docs/diagramas/`](docs/diagramas/) são arquivos do [Excalidraw](https://excalidraw.com): abra-os em excalidraw.com ou com a extensão do Excalidraw para o VS Code. O contrato da API da vitrine está em [`docs/api-contract.md`](docs/api-contract.md), e a análise de sites de ingressos reais, em [`docs/ticket-sites-analysis.md`](docs/ticket-sites-analysis.md) (ambos em inglês).
+
+## Diário de aprendizado
+
+### Módulo 00: Client/Server, HTTP e rede
+
+- **Aprendi:** o caminho de uma requisição (DNS, TCP, TLS, HTTP) e como ler cada etapa, e cada tipo de falha, na aba Network do DevTools.
+- **Aprendi:** HTTP e REST: métodos, status codes, headers, cookies, cache (`Cache-Control`, `ETag` e `304`), recursos no plural, idempotência e paginação.
+- **Aprendi:** CORS e a same-origin policy, e quando usar polling, SSE ou WebSocket. A análise do Sympla e da Eventim mostrou que nenhum dos dois faz polling da disponibilidade e que os dois usam uma sala de espera virtual na CDN.
+- **Decisão:** escrevi o contrato da API antes de qualquer código, em vez de deixar o formato surgir durante a implementação.
+- **Por quê:** a API simulada (Módulo 06) e a API real (Módulo 18) seguem o mesmo documento, então trocar uma pela outra quase não mexe no frontend.
 
 ## Autor
 

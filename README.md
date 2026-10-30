@@ -14,7 +14,7 @@ The project is built around one central challenge: **opening ticket sales for 20
 
 **In progress. No application code yet.**
 
-The project is in its first phase: networking and HTTP fundamentals, and designing the API contract before writing any code. Development of the first app (`palco-site`) starts next.
+The first phase, networking and HTTP fundamentals and the API contract, is complete. Development of the first app (`palco-site`) starts next.
 
 ## Planned architecture
 
@@ -39,7 +39,17 @@ Everything below is **planned**. It will be built step by step, starting with a 
 
 ## Documentation
 
-Design notes and diagrams live in [`docs/`](docs/). The diagrams in [`docs/diagramas/`](docs/diagramas/) are [Excalidraw](https://excalidraw.com) files: open them at excalidraw.com or with the Excalidraw extension for VS Code. The showcase API contract is in [`docs/api-contract.md`](docs/api-contract.md).
+Design notes and diagrams live in [`docs/`](docs/). The diagrams in [`docs/diagramas/`](docs/diagramas/) are [Excalidraw](https://excalidraw.com) files: open them at excalidraw.com or with the Excalidraw extension for VS Code. The showcase API contract is in [`docs/api-contract.md`](docs/api-contract.md), and the analysis of real ticketing sites is in [`docs/ticket-sites-analysis.md`](docs/ticket-sites-analysis.md).
+
+## Learning log
+
+### Module 00: Client/Server, HTTP and networking
+
+- **Learned:** the path of a request (DNS, TCP, TLS, HTTP) and how to read each step, and each kind of failure, in the DevTools Network tab.
+- **Learned:** HTTP and REST: methods, status codes, headers, cookies, caching (`Cache-Control`, `ETag` and `304`), plural resources, idempotency and pagination.
+- **Learned:** CORS and the same-origin policy, and when to use polling, SSE or WebSocket. Analyzing Sympla and Eventim showed that neither polls ticket availability and that both use a virtual waiting room at the CDN.
+- **Decision:** I wrote the API contract before any code, instead of letting the format emerge during implementation.
+- **Why:** the mock API (Module 06) and the real API (Module 18) follow the same document, so swapping one for the other barely touches the frontend.
 
 ## Author
 
