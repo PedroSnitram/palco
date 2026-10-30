@@ -109,11 +109,12 @@ Used in the event list. It contains only what an event card needs.
 | `salesStartAt` | date-time | When ticket sales open (or opened). |
 | `status` | string | One of the [event statuses](#event-status). |
 | `category` | string | One of the [category slugs](#categories). |
+| `ageRating` | AgeRating | Age rating (classificação indicativa). Lets the card show the rating badge. |
 | `image` | Image | Cover image. |
 | `venue` | VenueSummary | Where the event happens. |
 | `priceFrom` | Money or `null` | Lowest full-price ticket among the options that are not `sold_out` or `closed`, without the service fee. `null` when there is none. An amount of `0` means the event is free. |
 
-`priceFrom` ignores half-price tickets on purpose: half price requires proof of eligibility, so showing it as the starting price would mislead most buyers.
+`priceFrom` ignores half-price and discount tickets on purpose: both require proof of eligibility, so showing them as the starting price would mislead most buyers.
 
 ### EventDetail
 
@@ -124,6 +125,15 @@ Used in the event detail. It contains every field of `EventSummary`, plus:
 | `description` | string | Plain text written by the organizer. Line breaks are `\n`. It never contains HTML. |
 | `venue` | Venue | Replaces `VenueSummary` with the full venue, including the address. |
 | `ticketOptions` | TicketOption[] | Every ticket that can be bought for the event. |
+
+### AgeRating
+
+Brazilian law requires public shows to inform their age rating (ECA, art. 74).
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `code` | string | `L` (all ages), `10`, `12`, `14`, `16` or `18`, following the Brazilian rating system (ClassInd). |
+| `notes` | string or `null` | Extra entry rules set by the organizer, for example about minors entering with a parent. Plain text. |
 
 ### Image
 
@@ -174,7 +184,8 @@ One ticket that can be bought: a sector, in a batch, of a type. For example, "Pi
 | `id` | string | Permanent identifier. The cart will use it in a later version of this contract. |
 | `sector` | string | Sector name, for example `Pista` or `Camarote`. |
 | `batch` | string | Batch name, for example `1º lote`. |
-| `type` | string | `full` for full price (inteira) or `half` for half price (meia-entrada, required by Brazilian law 12.933/2013). |
+| `type` | string | `full` for full price (inteira), `half` for half price (meia-entrada, required by Brazilian law 12.933/2013), or `discount` for a price reserved to a specific group, such as customers of a partner bank. |
+| `discountName` | string or `null` | Who the discount is for, shown to the buyer, for example `Cliente Banco Exemplo`. Set only when `type` is `discount`; `null` otherwise. |
 | `price` | Money | Ticket price, without the service fee. |
 | `serviceFee` | Money | Service fee charged on top of the price. It is always shown to the buyer before purchase. |
 | `status` | string | One of the ticket option statuses below. |
@@ -240,6 +251,10 @@ Example: `GET /v1/events?city=sao-paulo&page=1&pageSize=2`
       "salesStartAt": "2026-11-10T10:00:00-03:00",
       "status": "on_sale",
       "category": "festivals",
+      "ageRating": {
+        "code": "16",
+        "notes": "Minors aged 14 and 15 may enter with a parent or legal guardian."
+      },
       "image": {
         "url": "https://images.palco.example/events/festival-de-verao-2027.jpg",
         "alt": "Crowd in front of a lit stage at sunset"
@@ -259,6 +274,7 @@ Example: `GET /v1/events?city=sao-paulo&page=1&pageSize=2`
       "salesStartAt": "2026-12-01T12:00:00-03:00",
       "status": "scheduled",
       "category": "comedy",
+      "ageRating": { "code": "14", "notes": null },
       "image": {
         "url": "https://images.palco.example/events/noite-de-stand-up.jpg",
         "alt": "Comedian holding a microphone under a spotlight"
@@ -314,6 +330,10 @@ Example: `GET /v1/events/festival-de-verao-2027`
   "salesStartAt": "2026-11-10T10:00:00-03:00",
   "status": "on_sale",
   "category": "festivals",
+  "ageRating": {
+    "code": "16",
+    "notes": "Minors aged 14 and 15 may enter with a parent or legal guardian."
+  },
   "image": {
     "url": "https://images.palco.example/events/festival-de-verao-2027.jpg",
     "alt": "Crowd in front of a lit stage at sunset"
@@ -336,6 +356,7 @@ Example: `GET /v1/events/festival-de-verao-2027`
       "sector": "Pista",
       "batch": "1º lote",
       "type": "full",
+      "discountName": null,
       "price": { "amountInCents": 15000, "currency": "BRL" },
       "serviceFee": { "amountInCents": 2250, "currency": "BRL" },
       "status": "few_left"
@@ -345,6 +366,7 @@ Example: `GET /v1/events/festival-de-verao-2027`
       "sector": "Pista",
       "batch": "1º lote",
       "type": "half",
+      "discountName": null,
       "price": { "amountInCents": 7500, "currency": "BRL" },
       "serviceFee": { "amountInCents": 1125, "currency": "BRL" },
       "status": "on_sale"
@@ -352,17 +374,29 @@ Example: `GET /v1/events/festival-de-verao-2027`
     {
       "id": "1842-03",
       "sector": "Pista",
+      "batch": "1º lote",
+      "type": "discount",
+      "discountName": "Cliente Banco Exemplo",
+      "price": { "amountInCents": 12000, "currency": "BRL" },
+      "serviceFee": { "amountInCents": 1800, "currency": "BRL" },
+      "status": "on_sale"
+    },
+    {
+      "id": "1842-04",
+      "sector": "Pista",
       "batch": "2º lote",
       "type": "full",
+      "discountName": null,
       "price": { "amountInCents": 18000, "currency": "BRL" },
       "serviceFee": { "amountInCents": 2700, "currency": "BRL" },
       "status": "upcoming"
     },
     {
-      "id": "1842-04",
+      "id": "1842-05",
       "sector": "Camarote",
       "batch": "1º lote",
       "type": "full",
+      "discountName": null,
       "price": { "amountInCents": 42000, "currency": "BRL" },
       "serviceFee": { "amountInCents": 6300, "currency": "BRL" },
       "status": "sold_out"
@@ -464,6 +498,6 @@ Retry-After: 30
 
 ## Changing this contract
 
-- **Allowed in `v1`:** adding new fields, new optional parameters, new categories or new statuses. Clients ignore what they do not know.
+- **Allowed in `v1`:** adding new fields, new optional parameters, new categories, new statuses or new ticket types. Clients ignore what they do not know; a ticket option with an unknown `type` is not shown to the buyer.
 - **Requires `v2`:** removing or renaming a field, changing a field's type or meaning, or making an optional parameter required.
 - Every change is made in this document first, in the same commit as the code that implements it.
