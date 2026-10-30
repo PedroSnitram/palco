@@ -14,7 +14,7 @@ This document describes how the public website (`palco-site`) requests showcase 
 - [Shared objects](#shared-objects)
 - [GET /v1/events](#get-v1events)
 - [GET /v1/events/{slug}](#get-v1eventsslug)
-- [Errors](#errors)
+- [Error format](#error-format)
 - [Changing this contract](#changing-this-contract)
 
 ## Conventions
@@ -26,7 +26,7 @@ All paths start with `/v1`. The host is not defined yet; examples use relative p
 ### Format
 
 - Request and response bodies are JSON, sent as `Content-Type: application/json; charset=utf-8`.
-- Error bodies use `Content-Type: application/problem+json` (see [Errors](#errors)).
+- Error bodies use `Content-Type: application/problem+json` (see [Error format](#error-format)).
 - Field names are in English and camelCase: `startsAt`, `priceFrom`.
 - Every field listed in this document is always present in the response. A field with no value is `null`; it is never omitted.
 - Clients must ignore fields they do not know. This allows the API to add fields without breaking anyone.
@@ -279,7 +279,7 @@ Example: `GET /v1/events?city=sao-paulo&page=1&pageSize=2`
 | Status | When |
 | --- | --- |
 | `400 Bad Request` | A parameter is invalid: `q` shorter than 2 or longer than 100 characters, `page` or `pageSize` out of range, an unknown `category`, a malformed date, or `dateFrom` after `dateTo`. |
-| `429 Too Many Requests` | The client sent too many requests. See [Errors](#errors). |
+| `429 Too Many Requests` | The client sent too many requests. See [Error format](#error-format). |
 
 ## GET /v1/events/{slug}
 
@@ -399,9 +399,9 @@ Location: /v1/events/festival-de-verao-2027-edicao-extra
 | Status | When |
 | --- | --- |
 | `404 Not Found` | No event has this slug, now or in the past. |
-| `429 Too Many Requests` | The client sent too many requests. See [Errors](#errors). |
+| `429 Too Many Requests` | The client sent too many requests. See [Error format](#error-format). |
 
-## Errors
+## Error format
 
 Every error response uses Problem Details ([RFC 9457](https://www.rfc-editor.org/rfc/rfc9457)) with `Content-Type: application/problem+json`.
 
