@@ -1,2 +1,8 @@
 # Roteiro de estudos pessoal: fica fora do repositório público
 Roteiro de estudos*.md
+
+# Arquivos HAR da coleta: podem conter dados pessoais
+*.har
+
+# Cópias de leitura e anotações pessoais
+notas/
